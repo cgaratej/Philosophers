@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:01:06 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/10 13:48:32 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:09:15 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	check_args(int argc, char **argv)
 			return (printf("Time_to_sleep must be at least 1.\n"), 1);
 		if (argc == 6 && ft_atoi(argv[5]) < 1)
 			return (printf("Number_of_times_each_philosopher_must_eat "
-					"ust be at least 1.\n"), 1);
+					"must be at least 1.\n"), 1);
 	}
 	else
 	{
@@ -67,7 +67,13 @@ static int	check_args(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
+	t_info data;
 	if (check_syntax(argv) | check_args(argc, argv))
 		return (1);
-	printf("hola");
+	if (var_init(&data, argv) == 1)
+	{
+		free(data.philo);
+		return (1);
+	}
+	init_philos(&data);
 }
