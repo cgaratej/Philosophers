@@ -6,11 +6,29 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:01:06 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/10 17:09:15 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:08:26 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	free_data(t_info *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->num_philo)
+	{
+		pthread_mutex_destroy(&data->philo[i].fork_l);
+		pthread_mutex_destroy(data->philo[i].fork_r);
+		i++;
+	}
+	free(data->philo);
+	pthread_mutex_destroy(&data->print);
+	pthread_mutex_destroy(&data->m_stop);
+	pthread_mutex_destroy(&data->m_eat);
+	pthread_mutex_destroy(&data->dead);
+}
 
 static int	check_syntax(char **argv)
 {
@@ -76,4 +94,5 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	init_philos(&data);
+	free_data(&data);
 }

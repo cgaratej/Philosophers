@@ -6,7 +6,7 @@
 #    By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 10:52:15 by cgaratej          #+#    #+#              #
-#    Updated: 2024/09/10 16:35:09 by cgaratej         ###   ########.fr        #
+#    Updated: 2024/09/12 15:51:55 by cgaratej         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ NONE=\033[0m
 
 BUILD_DIR = build
 
-SRC = main.c utils.c init.c
+SRC = main.c utils.c init.c rutine.c
 OBJ = $(SRC:%.c=$(BUILD_DIR)/%.o)
 DEPS = $(SRC:%.c=$(BUILD_DIR)/%.d)
 

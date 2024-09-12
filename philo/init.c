@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:26:36 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/10 17:53:45 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:07:57 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,28 @@ int	init_philos(t_info *data)
 	int	i;
 
 	data->t_start = timestamp();
-	while (data->num_philo)
+	i = 0;
+	while (i < data->num_philo)
 	{
 		data->philo[i].id = i + 1;
+		data->philo[i].last_eat = 0;
+		data->philo[i].info = data;
+		data->philo[i].m_count = 0;
+		pthread_mutex_init(&(data->philo[i].fork_l), NULL);
+		if (i == data->num_philo - 1)
+			data->philo[i].fork_r = &data->philo[0].fork_l;
+		else
+			data->philo[i].fork_r = &data->philo[i + 1].fork_l;
+		if (pthread_create(&data->philo[i].thread, NULL, \
+				&philo_life, &(data->philo[i])) != 0)
+			return (-1);
+		i++;
 	}
+	i = -1;
+	while (++i < data->num_philo)
+		if (pthread_join(data->philo[i].thread, NULL) != 0)
+			return (-1);
+	return (0);
 }
 
 int var_init(t_info *data, char **argv)

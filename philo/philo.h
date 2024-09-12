@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:54:45 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/10 17:13:50 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:01:57 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,20 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <limits.h>
+
+typedef struct s_info t_info;
 
 typedef struct s_philo
 {
 	int				id;
 	int				m_count;
 	int				is_eating;
-	struct t_info	*info;
+	pthread_t		thread;
+	t_info			*info;
 	long int		last_eat;
-	/*pthread_mutex_t	*fork_r;
-	pthread_mutex_t	fork_l;*/
+	pthread_mutex_t	*fork_r;
+	pthread_mutex_t	fork_l;
 }	t_philo;
 
 typedef struct s_info
@@ -54,5 +58,8 @@ int			ft_atoi(char *num);
 int			var_init(t_info *data, char **argv);
 int			init_philos(t_info *data);
 long long	timestamp(void);
-
+void		ft_usleep(int ms);
+int			is_dead(t_philo *philo, int flag);
+void		*philo_life(void *phi);
+void		print(t_philo *philo, char *str);
 #endif
