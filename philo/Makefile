@@ -6,13 +6,13 @@
 #    By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 10:52:15 by cgaratej          #+#    #+#              #
-#    Updated: 2024/09/12 15:51:55 by cgaratej         ###   ########.fr        #
+#    Updated: 2024/09/23 17:30:04 by cgaratej         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
-CC = cc -g
-CFLAGS = -Wall -Werror -Wextra -fsanitize=address -fsanitize=leak
+CC = gcc -g
+CFLAGS = -Wall -Werror -Wextra #-fsanitize=thread
 RM = rm -f
 
 GREEN=\033[32m

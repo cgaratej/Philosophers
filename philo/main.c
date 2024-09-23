@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:01:06 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/12 16:08:26 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/09/23 17:44:52 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ void	free_data(t_info *data)
 	}
 	free(data->philo);
 	pthread_mutex_destroy(&data->print);
-	pthread_mutex_destroy(&data->m_stop);
 	pthread_mutex_destroy(&data->m_eat);
-	pthread_mutex_destroy(&data->dead);
 }
 
 static int	check_syntax(char **argv)
@@ -62,7 +60,7 @@ static int	check_args(int argc, char **argv)
 {
 	if (argc == 5 || argc == 6)
 	{
-		if (ft_atoi(argv[1]) < 1)
+		if (ft_atoi(argv[1]) < 0)
 			return (printf("There must be at least 1 philosopher.\n"), 1);
 		if (ft_atoi(argv[2]) < 1)
 			return (printf("Time_to_die must be at least 1.\n"), 1);
