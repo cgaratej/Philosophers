@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:54:45 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/23 17:44:39 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:43:27 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_philo
 	pthread_t		thread;
 	t_info			*info;
 	long int		last_eat;
-	//long long		
 	pthread_mutex_t	*fork_r;
 	pthread_mutex_t	fork_l;
 }	t_philo;

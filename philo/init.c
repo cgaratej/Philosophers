@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:26:36 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/23 17:53:52 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:55:53 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ int	init_philos(t_info *data)
 				&philo_life, &(data->philo[i])) != 0)
 			return (-1);
 	}
-	if (checke_deat(data))
-		///printf("hol1a\n");
+	if (data->num_philo > 1 && checke_deat(data))
 		return (1);
 	i = -1;
 	while (++i < data->num_philo)
