@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:54:45 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/27 14:26:55 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:19:48 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ typedef enum e_opcode
 	LOCK,
 	UNLOCK,
 	INIT,
-	DESTROY,
-	CREATE,
-	JOIN,
-	DETACH
+	DESTROY
 }	t_opcode;
 
 typedef struct s_info t_info;
@@ -72,5 +69,5 @@ void		ft_usleep(int ms);
 void		*philo_life(void *phi);
 void		print(t_philo *philo, char *str);
 int			checke_deat(t_info *info);
-int			mutex_handle(pthread_mutex_t *mutex, t_opcode opcode);
+int			mutex_handle(pthread_mutex_t *mutex, t_opcode opcode, int id);
 #endif

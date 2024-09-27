@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:26:36 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/25 14:55:53 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:07:00 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	init_philos(t_info *data)
 		data->philo[i].last_eat = timestamp();
 		data->philo[i].info = data;
 		data->philo[i].m_count = 0;
-		pthread_mutex_init(&(data->philo[i].fork_l), NULL);
+		//pthread_mutex_init(&(data->philo[i].fork_l), NULL);
+		mutex_handle(&(data->philo[i].fork_l), INIT, i);
 		if (i == data->num_philo - 1)
 			data->philo[i].fork_r = &data->philo[0].fork_l;
 		else
@@ -48,8 +49,10 @@ int	init_philos(t_info *data)
 
 int var_init(t_info *data, char **argv)
 {
-	pthread_mutex_init(&data->print, NULL);
-	pthread_mutex_init(&data->m_eat, NULL);
+	//pthread_mutex_init(&data->print, NULL);
+	//pthread_mutex_init(&data->m_eat, NULL);
+	mutex_handle(&data->print, INIT, 0);
+	mutex_handle(&data->m_eat, INIT, 0);
 	data->stop = 0;
 	data->num_philo = ft_atoi(argv[1]);
 	data->philo = malloc(sizeof(t_philo) * data->num_philo);

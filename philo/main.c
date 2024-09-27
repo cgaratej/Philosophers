@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:01:06 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/27 14:25:58 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:19:29 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,17 @@ void	free_data(t_info *data)
 	i = 0;
 	while (i < data->num_philo)
 	{
-		pthread_mutex_destroy(&data->philo[i].fork_l);
-		pthread_mutex_destroy(data->philo[i].fork_r);
+		//pthread_mutex_destroy(&data->philo[i].fork_l);
+		mutex_handle(&data->philo[i].fork_l, DESTROY, i);
+		//pthread_mutex_destroy(data->philo[i].fork_r);
+		mutex_handle(data->philo[i].fork_r, DESTROY, i);
 		i++;
 	}
 	free(data->philo);
-	pthread_mutex_destroy(&data->print);
-	pthread_mutex_destroy(&data->m_eat);
+	//pthread_mutex_destroy(&data->print);
+	//pthread_mutex_destroy(&data->m_eat);
+	mutex_handle(&data->print, DESTROY, i);
+	mutex_handle(&data->m_eat, DESTROY, i);
 }
 
 static int	check_syntax(char **argv)
