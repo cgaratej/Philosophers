@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:41:04 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/25 15:56:19 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:24:39 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,21 @@ int	checke_deat(t_info *info)
 
 void	take_fork(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->fork_l);
-	print(philo, " has taken a fork\n");
-	pthread_mutex_lock(philo->fork_r);
-	print(philo, " has taken a fork\n");
+	ft_usleep(1);
+	if (philo->id % 2 == 0)
+	{	
+		pthread_mutex_lock(&philo->fork_l);
+		print(philo, " has taken a fork\n");
+		pthread_mutex_lock(philo->fork_r);
+		print(philo, " has taken a fork\n");
+	}
+	else
+	{
+		pthread_mutex_lock(philo->fork_r);
+		print(philo, " has taken a fork\n");
+		pthread_mutex_lock(&philo->fork_l);
+		print(philo, " has taken a fork\n");
+	}
 }
 
 void	eating(t_philo *philo)
@@ -55,8 +66,8 @@ void	eating(t_philo *philo)
 	pthread_mutex_unlock(philo->fork_r);
 	print(philo, " is sleeping\n");
 	ft_usleep(philo->info->time_sleep);
-	//if (philo->info->num_philo % 2 == 0)
-	print(philo, " is thinking\n");
+	if (philo->info->num_philo % 2 == 0)
+		print(philo, " is thinking\n");
 }
 
 void	*philo_life(void *phi)
@@ -83,7 +94,6 @@ void	*philo_life(void *phi)
 		}
 		else
 		{
-			//printf("%ld\n", philo->last_eat);
 			if (philo->id == philo->info->num_philo && !philo->m_count)
 			{
 				print(philo, " is thinking\n");
@@ -97,6 +107,15 @@ void	*philo_life(void *phi)
 		}
 		take_fork(philo);
 		eating(philo);
+		/*pthread_mutex_lock(&philo->info->m_eat);
+		if (philo->info->num_eat == philo->m_count)
+		{
+			print(philo, " finish\n");
+			philo->info->dead = 2;
+			pthread_mutex_unlock(&philo->info->m_eat);
+			return (NULL);
+		}
+		pthread_mutex_unlock(&philo->info->m_eat);*/
 	}
 	return (NULL);
 }
