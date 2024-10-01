@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:01:06 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/27 15:19:29 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:49:37 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,17 @@ void	free_data(t_info *data)
 {
 	int	i;
 
-	i = 0;
-	while (i < data->num_philo)
+	i = -1;
+	while (++i < data->num_philo)
 	{
-		//pthread_mutex_destroy(&data->philo[i].fork_l);
-		mutex_handle(&data->philo[i].fork_l, DESTROY, i);
-		//pthread_mutex_destroy(data->philo[i].fork_r);
-		mutex_handle(data->philo[i].fork_r, DESTROY, i);
-		i++;
+		mutex_handle(&data->philo[i].fork_l, DESTROY);
+		mutex_handle(data->philo[i].fork_r, DESTROY);
 	}
+	mutex_handle(&data->print, DESTROY);
+	//mutex_handle(&data->m_stop, DESTROY);
+	//mutex_handle(&data->m_eat, DESTROY);
+	mutex_handle(&data->dead, DESTROY);
 	free(data->philo);
-	//pthread_mutex_destroy(&data->print);
-	//pthread_mutex_destroy(&data->m_eat);
-	mutex_handle(&data->print, DESTROY, i);
-	mutex_handle(&data->m_eat, DESTROY, i);
 }
 
 static int	check_syntax(char **argv)

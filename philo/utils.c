@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:09:40 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/27 15:19:42 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/01 15:06:58 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,52 +54,52 @@ void	ft_usleep(int ms)
 		usleep(ms / 10);
 }
 
-int	mutex_error_check(int status, int id)
+int	mutex_error_check(int status)
 {
 	if (status == INIT)
 	{
-		printf("id %d Problem initializing the mutex.\n", id);
-		
+		printf("Problem initializing the mutex.\n");
+		return (1);
 	}
 	if (status == LOCK)
 	{
-		printf("id %d Problem locking the mutex.\n", id);
+		printf("Problem locking the mutex.\n");
 		return (1);
 	}
 	if (status == UNLOCK)
 	{
-		printf("id %d Problem unlocking the mutex.\n", id);
+		printf("Problem unlocking the mutex.\n");
 		return (1);
 	}
 	if (status == DESTROY)
 	{
-		printf("id %d Problem destroying the mutex.\n", id);
+		printf("Problem destroying the mutex.\n");
 		return (1);
 	}
 	return (0);
 }
 
-int	mutex_handle(pthread_mutex_t *mutex, t_opcode opcode, int id)
+int	mutex_handle(pthread_mutex_t *mutex, t_opcode opcode)
 {
 	if (opcode == INIT)
 	{
 		if (pthread_mutex_init(mutex, NULL) != 0)
-			return (mutex_error_check(INIT, id));
+			return (mutex_error_check(INIT));
 	}
 	else if (opcode == LOCK)
 	{
 		if (pthread_mutex_lock(mutex) != 0)
-			return (mutex_error_check(LOCK, id));
+			return (mutex_error_check(LOCK));
 	}
 	else if (opcode == UNLOCK)
 	{
 		if (pthread_mutex_unlock(mutex) != 0)
-			return (mutex_error_check(UNLOCK, id));
+			return (mutex_error_check(UNLOCK));
 	}
 	else if (opcode == DESTROY)
 	{
 		if (pthread_mutex_destroy(mutex) != 0)
-			return (mutex_error_check(DESTROY, id));
+			return (mutex_error_check(DESTROY));
 	}
 	return (0);
 }
@@ -108,11 +108,9 @@ void	print(t_philo *philo, char *str)
 {
 	long int	time;
 
-	//pthread_mutex_lock(&(philo->info->print));
-	mutex_handle(&(philo->info->print), LOCK, philo->id);
+	mutex_handle(&(philo->info->print), LOCK);
 	time = timestamp() - philo->info->t_start;
-	if (!philo->info->stop && time >= 0 && time <= INT_MAX)
+	if (!philo->info->stop && time >= 0 && time <= INT_MAX && !is_dead(philo, 0))
 		printf("%lld %d %s", timestamp() - philo->info->t_start, philo->id, str);
-	//pthread_mutex_unlock(&(philo->info->print));
-	mutex_handle(&(philo->info->print), UNLOCK, philo->id);
+	mutex_handle(&(philo->info->print), UNLOCK);
 }

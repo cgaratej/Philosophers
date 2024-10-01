@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:26:36 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/27 15:07:00 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/01 13:31:56 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int	init_philos(t_info *data)
 		data->philo[i].last_eat = timestamp();
 		data->philo[i].info = data;
 		data->philo[i].m_count = 0;
-		//pthread_mutex_init(&(data->philo[i].fork_l), NULL);
-		mutex_handle(&(data->philo[i].fork_l), INIT, i);
+		mutex_handle(&(data->philo[i].fork_l), INIT);
 		if (i == data->num_philo - 1)
 			data->philo[i].fork_r = &data->philo[0].fork_l;
 		else
@@ -38,8 +37,6 @@ int	init_philos(t_info *data)
 				&philo_life, &(data->philo[i])) != 0)
 			return (-1);
 	}
-	if (data->num_philo > 1 && checke_deat(data))
-		return (1);
 	i = -1;
 	while (++i < data->num_philo)
 		if (pthread_join(data->philo[i].thread, NULL) != 0)
@@ -49,10 +46,10 @@ int	init_philos(t_info *data)
 
 int var_init(t_info *data, char **argv)
 {
-	//pthread_mutex_init(&data->print, NULL);
-	//pthread_mutex_init(&data->m_eat, NULL);
-	mutex_handle(&data->print, INIT, 0);
-	mutex_handle(&data->m_eat, INIT, 0);
+	mutex_handle(&data->print, INIT);
+	mutex_handle(&data->m_eat, INIT);
+	mutex_handle(&data->m_stop, INIT);
+	mutex_handle(&data->dead, INIT);
 	data->stop = 0;
 	data->num_philo = ft_atoi(argv[1]);
 	data->philo = malloc(sizeof(t_philo) * data->num_philo);
@@ -62,7 +59,6 @@ int var_init(t_info *data, char **argv)
 	data->time_die = ft_atoi(argv[2]);
 	data->time_eat = ft_atoi(argv[3]);
 	data->time_sleep = ft_atoi(argv[4]);
-	data->dead = 0;
 	if (argv[5])
 		data->num_eat = ft_atoi(argv[5]);
 	else

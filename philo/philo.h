@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:54:45 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/09/27 15:19:48 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/01 13:31:50 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ typedef struct s_info
 	int				num_eat;
 	int				stop;
 	long int		t_start;
-	int				dead;
 	t_philo			*philo;
 	pthread_mutex_t	print;
 	pthread_mutex_t	m_eat;
+	pthread_mutex_t	m_stop;
+	pthread_mutex_t	dead;
 }	t_info;
 
 
@@ -68,6 +69,7 @@ long long	timestamp(void);
 void		ft_usleep(int ms);
 void		*philo_life(void *phi);
 void		print(t_philo *philo, char *str);
-int			checke_deat(t_info *info);
-int			mutex_handle(pthread_mutex_t *mutex, t_opcode opcode, int id);
+int			is_dead(t_philo *philo, int nb);
+void		*check_death(void *phi);
+int			mutex_handle(pthread_mutex_t *mutex, t_opcode opcode);
 #endif
