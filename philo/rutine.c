@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:41:04 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/01 15:04:50 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:31:32 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	*check_death(void *phi)
 	if (!is_dead(philo, 0) && timestamp() - \
 			philo->last_eat >= (long)(philo->info->time_die))
 	{
-		mutex_handle(&philo->info->m_eat, UNLOCK);
-		mutex_handle(&philo->info->m_stop, UNLOCK);
+		/*mutex_handle(&philo->info->m_eat, UNLOCK);
+		mutex_handle(&philo->info->m_stop, UNLOCK);*/
 		print(philo, " died\n");
 		is_dead(philo, 1);
 	}
-	//mutex_handle(&philo->info->m_eat, UNLOCK);
-	//mutex_handle(&philo->info->m_stop, UNLOCK);
+	mutex_handle(&philo->info->m_eat, UNLOCK);
+	mutex_handle(&philo->info->m_stop, UNLOCK);
 	return (NULL);
 }
 
@@ -134,10 +134,12 @@ void	*philo_life(void *phi)
 		one_philo(philo);
 		return (NULL);
 	}
+	if (philo->id % 2 == 0)
+		ft_usleep(philo->info->time_eat / 10);
 	while (!is_dead(philo, 0))
 	{
 		pthread_create(&t, NULL, check_death, phi);
-		synchronized(philo);
+		//synchronized(philo);
 		take_fork(philo);
 		eating(philo);
 		pthread_detach(t);

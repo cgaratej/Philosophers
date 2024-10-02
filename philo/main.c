@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:01:06 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/01 14:49:37 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:28:04 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	free_data(t_info *data)
 	while (++i < data->num_philo)
 	{
 		mutex_handle(&data->philo[i].fork_l, DESTROY);
-		mutex_handle(data->philo[i].fork_r, DESTROY);
+		//mutex_handle(data->philo[i].fork_r, DESTROY);
 	}
 	mutex_handle(&data->print, DESTROY);
-	//mutex_handle(&data->m_stop, DESTROY);
-	//mutex_handle(&data->m_eat, DESTROY);
+	mutex_handle(&data->m_eat, DESTROY);
+	mutex_handle(&data->m_stop, DESTROY);
 	mutex_handle(&data->dead, DESTROY);
 	free(data->philo);
 }
