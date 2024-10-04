@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:09:40 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/02 11:49:07 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/04 18:33:05 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ long long	timestamp(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void	ft_usleep(int ms)
+void	ft_usleep(int ms, t_info *info)
 {
 	long int	time;
 
 	time = timestamp();
-	while (timestamp() - time < ms)
-		usleep(ms / 10);
+	while (timestamp() - time < ms && !is_dead(info, 0))
+		usleep(500);
 }
 
 int	mutex_error_check(int status)
@@ -104,13 +104,13 @@ int	mutex_handle(pthread_mutex_t *mutex, t_opcode opcode)
 	return (0);
 }
 
-void	print(t_philo *philo, char *str)
+void	print(t_philo *philo, char *str, int is_deat)
 {
 	long int	time;
 
 	mutex_handle(&(philo->info->print), LOCK);
 	time = timestamp() - philo->info->t_start;
-	if (time >= 0 && time <= INT_MAX && !is_dead(philo, 0))
+	if (time >= 0 && time <= INT_MAX && (is_deat || !is_dead(philo->info, 0)))
 		printf("%lld %d %s", timestamp() - philo->info->t_start, philo->id, str);
 	mutex_handle(&(philo->info->print), UNLOCK);
 }

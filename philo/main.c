@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:01:06 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/02 12:28:04 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:30:47 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	init_philos(&data);
+	pthread_join(data.t, NULL);
 	free_data(&data);
 }

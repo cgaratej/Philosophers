@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:26:36 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/01 13:31:56 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/04 18:03:04 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	init_philos(t_info *data)
 {
 	int	i;
 
-	data->t_start = timestamp();
 	i = -1;
 	while (++i < data->num_philo)
 	{
@@ -30,6 +29,7 @@ int	init_philos(t_info *data)
 		else
 			data->philo[i].fork_r = &data->philo[i + 1].fork_l;
 	}
+	data->t_start = timestamp();
 	i = -1;
 	while (++i < data->num_philo)
 	{
@@ -37,6 +37,7 @@ int	init_philos(t_info *data)
 				&philo_life, &(data->philo[i])) != 0)
 			return (-1);
 	}
+	pthread_create(&data->t, NULL, check_death, data);
 	i = -1;
 	while (++i < data->num_philo)
 		if (pthread_join(data->philo[i].thread, NULL) != 0)
