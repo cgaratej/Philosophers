@@ -6,7 +6,7 @@
 #    By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 10:52:15 by cgaratej          #+#    #+#              #
-#    Updated: 2024/10/04 17:18:18 by cgaratej         ###   ########.fr        #
+#    Updated: 2024/10/04 19:08:06 by cgaratej         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ NONE=\033[0m
 
 BUILD_DIR = build
 
-SRC = main.c utils.c init.c rutine.c
+SRC = main.c utils.c init.c rutine.c mutex_manager.c
 OBJ = $(SRC:%.c=$(BUILD_DIR)/%.o)
 DEPS = $(SRC:%.c=$(BUILD_DIR)/%.d)
 

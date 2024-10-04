@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:41:04 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/04 18:34:46 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/04 18:55:16 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*check_death(void *info_void)
 {
 	t_info	*info;
-	int	i;
+	int		i;
 
 	info = (t_info *)info_void;
 	while (!is_dead(info, 0))
@@ -56,7 +56,7 @@ int	is_dead(t_info *info, int nb)
 void	take_fork(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
-	{	
+	{
 		mutex_handle(&philo->fork_l, LOCK);
 		print(philo, " has taken a fork\n", 0);
 		mutex_handle(philo->fork_r, LOCK);

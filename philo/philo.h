@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:54:45 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/04 18:33:25 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/04 18:58:44 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef enum e_opcode
 	DESTROY
 }	t_opcode;
 
-typedef struct s_info t_info;
+typedef struct s_info	t_info;
 
 typedef struct s_philo
 {
@@ -45,7 +45,6 @@ typedef struct s_philo
 
 typedef struct s_info
 {
-
 	int				philo_eat;
 	int				num_philo;
 	int				time_die;
@@ -61,7 +60,6 @@ typedef struct s_info
 	pthread_mutex_t	m_stop;
 	pthread_mutex_t	dead;
 }	t_info;
-
 
 int			ft_atoi(char *num);
 int			var_init(t_info *data, char **argv);

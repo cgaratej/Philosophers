@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:09:40 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/04 18:33:05 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/04 19:07:24 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,56 +54,6 @@ void	ft_usleep(int ms, t_info *info)
 		usleep(500);
 }
 
-int	mutex_error_check(int status)
-{
-	if (status == INIT)
-	{
-		printf("Problem initializing the mutex.\n");
-		return (1);
-	}
-	if (status == LOCK)
-	{
-		printf("Problem locking the mutex.\n");
-		return (1);
-	}
-	if (status == UNLOCK)
-	{
-		printf("Problem unlocking the mutex.\n");
-		return (1);
-	}
-	if (status == DESTROY)
-	{
-		printf("Problem destroying the mutex.\n");
-		return (1);
-	}
-	return (0);
-}
-
-int	mutex_handle(pthread_mutex_t *mutex, t_opcode opcode)
-{
-	if (opcode == INIT)
-	{
-		if (pthread_mutex_init(mutex, NULL) != 0)
-			return (mutex_error_check(INIT));
-	}
-	else if (opcode == LOCK)
-	{
-		if (pthread_mutex_lock(mutex) != 0)
-			return (mutex_error_check(LOCK));
-	}
-	else if (opcode == UNLOCK)
-	{
-		if (pthread_mutex_unlock(mutex) != 0)
-			return (mutex_error_check(UNLOCK));
-	}
-	else if (opcode == DESTROY)
-	{
-		if (pthread_mutex_destroy(mutex) != 0)
-			return (mutex_error_check(DESTROY));
-	}
-	return (0);
-}
-
 void	print(t_philo *philo, char *str, int is_deat)
 {
 	long int	time;
@@ -111,6 +61,7 @@ void	print(t_philo *philo, char *str, int is_deat)
 	mutex_handle(&(philo->info->print), LOCK);
 	time = timestamp() - philo->info->t_start;
 	if (time >= 0 && time <= INT_MAX && (is_deat || !is_dead(philo->info, 0)))
-		printf("%lld %d %s", timestamp() - philo->info->t_start, philo->id, str);
+		printf("%lld %d %s", timestamp() - philo->info->t_start, \
+				philo->id, str);
 	mutex_handle(&(philo->info->print), UNLOCK);
 }

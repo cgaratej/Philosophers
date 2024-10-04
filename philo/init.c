@@ -6,11 +6,31 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:26:36 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/04 18:03:04 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/04 19:02:29 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static int	create_pthreads(t_info *data)
+{
+	int	i;
+
+	i = -1;
+	data->t_start = timestamp();
+	while (++i < data->num_philo)
+	{
+		if (pthread_create(&data->philo[i].thread, NULL, \
+				&philo_life, &(data->philo[i])) != 0)
+			return (-1);
+	}
+	pthread_create(&data->t, NULL, check_death, data);
+	i = -1;
+	while (++i < data->num_philo)
+		if (pthread_join(data->philo[i].thread, NULL) != 0)
+			return (-1);
+	return (0);
+}
 
 int	init_philos(t_info *data)
 {
@@ -29,23 +49,12 @@ int	init_philos(t_info *data)
 		else
 			data->philo[i].fork_r = &data->philo[i + 1].fork_l;
 	}
-	data->t_start = timestamp();
-	i = -1;
-	while (++i < data->num_philo)
-	{
-		if (pthread_create(&data->philo[i].thread, NULL, \
-				&philo_life, &(data->philo[i])) != 0)
-			return (-1);
-	}
-	pthread_create(&data->t, NULL, check_death, data);
-	i = -1;
-	while (++i < data->num_philo)
-		if (pthread_join(data->philo[i].thread, NULL) != 0)
-			return (-1);
+	if (create_pthreads(data))
+		return (-1);
 	return (0);
 }
 
-int var_init(t_info *data, char **argv)
+int	var_init(t_info *data, char **argv)
 {
 	mutex_handle(&data->print, INIT);
 	mutex_handle(&data->m_eat, INIT);

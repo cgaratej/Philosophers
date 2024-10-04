@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:01:06 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/04 17:30:47 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/04 18:54:36 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	free_data(t_info *data)
 	while (++i < data->num_philo)
 	{
 		mutex_handle(&data->philo[i].fork_l, DESTROY);
-		//mutex_handle(data->philo[i].fork_r, DESTROY);
 	}
 	mutex_handle(&data->print, DESTROY);
 	mutex_handle(&data->m_eat, DESTROY);
@@ -84,7 +83,8 @@ static int	check_args(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_info data;
+	t_info	data;
+
 	if (check_syntax(argv) | check_args(argc, argv))
 		return (1);
 	if (var_init(&data, argv) == 1)
