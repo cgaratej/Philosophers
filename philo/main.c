@@ -6,13 +6,13 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:01:06 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/04 18:54:36 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:13:28 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	free_data(t_info *data)
+static void	free_data(t_info *data)
 {
 	int	i;
 

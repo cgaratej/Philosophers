@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:09:40 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/04 19:07:24 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:08:52 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,18 @@ void	print(t_philo *philo, char *str, int is_deat)
 		printf("%lld %d %s", timestamp() - philo->info->t_start, \
 				philo->id, str);
 	mutex_handle(&(philo->info->print), UNLOCK);
+}
+
+int	is_dead(t_info *info, int nb)
+{
+	mutex_handle(&info->dead, LOCK);
+	if (nb)
+		info->stop = 1;
+	if (info->stop)
+	{
+		mutex_handle(&info->dead, UNLOCK);
+		return (1);
+	}
+	mutex_handle(&info->dead, UNLOCK);
+	return (0);
 }

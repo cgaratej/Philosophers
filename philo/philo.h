@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:54:45 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/04 18:58:44 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:14:51 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,20 @@ typedef struct s_info
 }	t_info;
 
 int			ft_atoi(char *num);
-int			var_init(t_info *data, char **argv);
-int			init_philos(t_info *data);
 long long	timestamp(void);
 void		ft_usleep(int ms, t_info *info);
-void		*philo_life(void *phi);
 void		print(t_philo *philo, char *str, int is_deat);
 int			is_dead(t_info *info, int nb);
-void		*check_death(void *phi);
 int			mutex_handle(pthread_mutex_t *mutex, t_opcode opcode);
+
+int			var_init(t_info *data, char **argv);
+int			init_philos(t_info *data);
+
+void		*philo_life(void *phi);
+void		*check_death(void *phi);
+
+void		eating(t_philo *philo);
+void		take_fork(t_philo *philo);
+void		synchronized(t_philo *philo);
+
 #endif

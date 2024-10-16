@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:41:04 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/04 18:55:16 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:08:59 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,6 @@ void	*check_death(void *info_void)
 		usleep(250);
 	}
 	return (NULL);
-}
-
-int	is_dead(t_info *info, int nb)
-{
-	mutex_handle(&info->dead, LOCK);
-	if (nb)
-		info->stop = 1;
-	if (info->stop)
-	{
-		mutex_handle(&info->dead, UNLOCK);
-		return (1);
-	}
-	mutex_handle(&info->dead, UNLOCK);
-	return (0);
 }
 
 void	take_fork(t_philo *philo)
@@ -87,14 +73,6 @@ void	eating(t_philo *philo)
 		print(philo, " is thinking\n", 0);
 }
 
-void	one_philo(t_philo *philo)
-{
-	mutex_handle(&philo->fork_l, LOCK);
-	print(philo, " has taken a fork\n", 0);
-	ft_usleep(philo->info->time_die, philo->info);
-	mutex_handle(&philo->fork_l, UNLOCK);
-}
-
 void	synchronized(t_philo *philo)
 {
 	if (philo->id % 2 == 0 && !philo->m_count)
@@ -115,36 +93,4 @@ void	synchronized(t_philo *philo)
 		print(philo, " is thinking\n", 0);
 		ft_usleep(philo->info->time_eat, philo->info);
 	}
-}
-
-void	philo_finish(t_philo *philo)
-{
-	mutex_handle(&philo->info->m_stop, LOCK);
-	if (++philo->info->philo_eat == philo->info->num_philo)
-		is_dead(philo->info, 2);
-	mutex_handle(&philo->info->m_stop, UNLOCK);
-}
-
-void	*philo_life(void *phi)
-{
-	t_philo		*philo;
-
-	philo = (t_philo *)phi;
-	if (philo->info->num_philo == 1)
-	{
-		one_philo(philo);
-		return (NULL);
-	}
-	while (!is_dead(philo->info, 0))
-	{
-		synchronized(philo);
-		take_fork(philo);
-		eating(philo);
-		if (philo->m_count == philo->info->num_eat)
-		{
-			philo_finish(philo);
-			return (NULL);
-		}
-	}
-	return (NULL);
 }
