@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:09:40 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/16 16:08:52 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:29:08 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,13 @@ int	is_dead(t_info *info, int nb)
 {
 	mutex_handle(&info->dead, LOCK);
 	if (nb)
-		info->stop = 1;
-	if (info->stop)
+		info->stop = nb;
+	if (info->stop == 1)
+	{
+		mutex_handle(&info->dead, UNLOCK);
+		return (1);
+	}
+	else if (info->stop == 2)
 	{
 		mutex_handle(&info->dead, UNLOCK);
 		return (1);

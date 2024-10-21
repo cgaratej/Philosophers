@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:41:04 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/16 16:08:59 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:59:23 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,17 @@ void	*check_death(void *info_void)
 	{
 		mutex_handle(&info->m_eat, LOCK);
 		mutex_handle(&info->m_stop, LOCK);
-		i = 0;
-		while (i < info->num_philo && !is_dead(info, 0))
+		i = -1;
+		while (++i < info->num_philo && !is_dead(info, 0))
 		{
 			if (timestamp() - info->philo[i].last_eat >= (long)(info->time_die))
 			{
-				is_dead(info, 1);
-				print(&info->philo[i], " died\n", 1);
+				if (is_dead(info, 0) != 2)
+				{
+					is_dead(info, 1);
+					print(&info->philo[i], " died\n", 1);
+				}
 			}
-			i++;
 		}
 		mutex_handle(&info->m_eat, UNLOCK);
 		mutex_handle(&info->m_stop, UNLOCK);
