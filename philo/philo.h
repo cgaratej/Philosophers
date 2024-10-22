@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:54:45 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/16 16:14:51 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:28:09 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ void		*check_death(void *phi);
 void		eating(t_philo *philo);
 void		take_fork(t_philo *philo);
 void		synchronized(t_philo *philo);
+void		check_finish(t_info *info);
 
 #endif

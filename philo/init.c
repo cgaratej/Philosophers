@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:26:36 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/04 19:02:29 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:55:46 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ int	var_init(t_info *data, char **argv)
 	if (argv[5])
 		data->num_eat = ft_atoi(argv[5]);
 	else
-		data->num_eat = 0;
+		data->num_eat = -1;
 	return (0);
 }

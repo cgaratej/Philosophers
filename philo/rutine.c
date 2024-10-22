@@ -6,11 +6,26 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:41:04 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/21 14:59:23 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:29:05 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	check_philo_death(t_info *info, int i)
+{
+	if (timestamp() - info->philo[i].last_eat >= (long)(info->time_die))
+	{
+		check_finish(info);
+		if (info->philo_eat == info->num_philo && info->num_philo != 1)
+			is_dead(info, 2);
+		else
+		{
+			is_dead(info, 1);
+			print(&info->philo[i], " died\n", 1);
+		}
+	}
+}
 
 void	*check_death(void *info_void)
 {
@@ -25,14 +40,7 @@ void	*check_death(void *info_void)
 		i = -1;
 		while (++i < info->num_philo && !is_dead(info, 0))
 		{
-			if (timestamp() - info->philo[i].last_eat >= (long)(info->time_die))
-			{
-				if (is_dead(info, 0) != 2)
-				{
-					is_dead(info, 1);
-					print(&info->philo[i], " died\n", 1);
-				}
-			}
+			check_philo_death(info, i);
 		}
 		mutex_handle(&info->m_eat, UNLOCK);
 		mutex_handle(&info->m_stop, UNLOCK);

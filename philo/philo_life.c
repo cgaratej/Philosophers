@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:05:46 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/21 12:29:16 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:28:26 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,17 @@ static void	one_philo(t_philo *philo)
 	mutex_handle(&philo->fork_l, UNLOCK);
 }
 
-static void	philo_finish(t_philo *philo)
+void	check_finish(t_info *info)
 {
-	mutex_handle(&philo->info->m_stop, LOCK);
-	if (++philo->info->philo_eat == philo->info->num_philo)
-		is_dead(philo->info, 2);
-	mutex_handle(&philo->info->m_stop, UNLOCK);
+	int	i;
+
+	i = -1;
+	info->philo_eat = 0;
+	while (++i < info->num_philo && !is_dead(info, 0))
+	{
+		if (info->philo[i].m_count == info->num_eat)
+			info->philo_eat++;
+	}
 }
 
 void	*philo_life(void *phi)
@@ -44,10 +49,7 @@ void	*philo_life(void *phi)
 		take_fork(philo);
 		eating(philo);
 		if (philo->m_count == philo->info->num_eat)
-		{
-			philo_finish(philo);
 			return (NULL);
-		}
 	}
 	return (NULL);
 }
