@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:05:46 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/22 16:11:17 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:59:43 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	one_philo(t_philo *philo)
 {
 	mutex_handle(&philo->fork_l, LOCK);
-	print(philo, " has taken a fork 🍴\n", 0);
+	print(philo, LGREEN" has taken a fork 🍴\n"NONE, 0);
 	ft_usleep(philo->info->time_die, philo->info);
 	mutex_handle(&philo->fork_l, UNLOCK);
 }

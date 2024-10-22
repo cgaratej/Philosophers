@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:54:45 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/22 15:28:09 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:06:55 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <limits.h>
+
+# define RED		"\033[1;91m"
+# define NONE		"\033[0m"
+# define LGREEN		"\033[1;92m"
+# define ORANGE		"\033[33m"
+# define CYAN		"\x1b[36m"
+# define MAGENTA	"\x1b[35m"
 
 typedef enum e_opcode
 {

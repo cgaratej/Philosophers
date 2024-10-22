@@ -6,7 +6,7 @@
 /*   By: cgaratej <cgaratej@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:41:04 by cgaratej          #+#    #+#             */
-/*   Updated: 2024/10/22 16:11:05 by cgaratej         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:07:08 by cgaratej         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	check_philo_death(t_info *info, int i)
 		else
 		{
 			is_dead(info, 1);
-			print(&info->philo[i], " died 😵\n", 1);
+			print(&info->philo[i], RED" died 😵\n"NONE, 1);
 		}
 	}
 }
@@ -54,22 +54,22 @@ void	take_fork(t_philo *philo)
 	if (philo->id % 2 == 0)
 	{
 		mutex_handle(&philo->fork_l, LOCK);
-		print(philo, " has taken a fork 🍴\n", 0);
+		print(philo, LGREEN" has taken a fork 🍴\n"NONE, 0);
 		mutex_handle(philo->fork_r, LOCK);
-		print(philo, " has taken a fork 🍴\n", 0);
+		print(philo, LGREEN" has taken a fork 🍴\n"NONE, 0);
 	}
 	else
 	{
 		mutex_handle(philo->fork_r, LOCK);
-		print(philo, " has taken a fork 🍴\n", 0);
+		print(philo, LGREEN" has taken a fork 🍴\n"NONE, 0);
 		mutex_handle(&philo->fork_l, LOCK);
-		print(philo, " has taken a fork 🍴\n", 0);
+		print(philo, LGREEN" has taken a fork 🍴\n"NONE, 0);
 	}
 }
 
 void	eating(t_philo *philo)
 {
-	print(philo, " is eating 🍝\n", 0);
+	print(philo, ORANGE" is eating 🍝\n"NONE, 0);
 	mutex_handle(&philo->info->m_eat, LOCK);
 	philo->last_eat = timestamp();
 	philo->m_count++;
@@ -77,30 +77,30 @@ void	eating(t_philo *philo)
 	ft_usleep(philo->info->time_eat, philo->info);
 	mutex_handle(&philo->fork_l, UNLOCK);
 	mutex_handle(philo->fork_r, UNLOCK);
-	print(philo, " is sleeping 😴\n", 0);
+	print(philo, CYAN" is sleeping 😴\n"NONE, 0);
 	ft_usleep(philo->info->time_sleep, philo->info);
 	if (philo->info->num_philo % 2 == 0)
-		print(philo, " is thinking 🤔\n", 0);
+		print(philo, MAGENTA" is thinking 🤔\n"NONE, 0);
 }
 
 void	synchronized(t_philo *philo)
 {
 	if (philo->id % 2 == 0 && !philo->m_count)
 	{
-		print(philo, " is thinking 🤔\n", 0);
+		print(philo, MAGENTA" is thinking 🤔\n"NONE, 0);
 		ft_usleep(philo->info->time_eat, philo->info);
 	}
 	else
 	{
 		if (philo->id == philo->info->num_philo && !philo->m_count)
 		{
-			print(philo, " is thinking 🤔\n", 0);
+			print(philo, MAGENTA" is thinking 🤔\n"NONE, 0);
 			ft_usleep(philo->info->time_eat * 2, philo->info);
 		}
 	}
 	if (philo->info->num_philo % 2 != 0 && philo->m_count)
 	{
-		print(philo, " is thinking 🤔\n", 0);
+		print(philo, MAGENTA" is thinking 🤔\n"NONE, 0);
 		ft_usleep(philo->info->time_eat, philo->info);
 	}
 }
